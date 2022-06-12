@@ -7,28 +7,61 @@ import java.util.List;
 public class temp {
 	public static void main(String[] args) {
 
-		List<Integer> temp = new ArrayList<>(4);
+		String s = "12:05:45AM";
 
-		temp.add(1);
-		temp.add(100);
-		temp.add(10);
-		temp.add(100);
+		StringBuilder temp = new StringBuilder();
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		if (s.charAt(s.length() - 2) == 'P') {
+			a = Character.getNumericValue(s.charAt(0));
+			b = Character.getNumericValue(s.charAt(1));
 
-		
-		int max = temp.get(0);
-		int count = 0;
+			temp.append(a);
+			temp.append(b);
+			System.out.println(temp);
+			c = Integer.parseInt(temp.toString());
 
-		for (int i = 0; i < temp.size(); i++) {
-			if (max < temp.get(i)) {
-				max = temp.get(i);
-				count = 1;
-			} else if (max == temp.get(i)) {
-				count++;
+			if (c != 12) {
+				c += 12;
 			}
+			System.out.println(c);
+			temp.setLength(0);
+			temp.append(String.valueOf(c));
+			for (int i = 2; i < s.length() - 2; i++) {
+				temp.append(s.charAt(i));
+			}
+			// AM
+		} else {
+			a = Character.getNumericValue(s.charAt(0));
+			b = Character.getNumericValue(s.charAt(1));
+
+			temp.append(a);
+			temp.append(b);
+			c = Integer.parseInt(temp.toString());
+			temp.setLength(0);
+			// special case
+			if (c == 12) {
+				c -= 12;
+				temp.append('0');
+				temp.append(String.valueOf(c));
+				for (int i = 2; i < s.length() - 2; i++) {
+					temp.append(s.charAt(i));
+
+				}
+			}else if(c <12) {
+				temp.append('0');
+				temp.append(String.valueOf(c));
+				for (int i = 2; i < s.length() - 2; i++) {
+					temp.append(s.charAt(i));
+
+				}
+			}
+
+			
+
 		}
-		System.out.println(max);
-		
-		System.out.println(count);
+		System.out.println(temp.toString());
 	}
 
 }
