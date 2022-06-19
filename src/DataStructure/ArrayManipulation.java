@@ -24,33 +24,41 @@ class Result {
     public static long arrayManipulation(int n, List<List<Integer>> queries) {
         // Write your code here
 
-        List<Integer> temp = new ArrayList<>(n);        
-        for(int i=0; i<n;i++) {
+        List<Integer> temp = new ArrayList<>(n+2);        
+        
+        for(int i=0; i<n+2;i++) {
         	temp.add(0);
         }
         
         int row = queries.size();
-
-        int ca = queries.get(0).size();
+        int column = queries.get(0).size();
 
         int start = 0;
         int end = 0;
-        int sumValue = 0;
+        int value = 0;
 
         for (int i = 0; i < row; i++) {
             start = queries.get(i).get(0);
             end = queries.get(i).get(1);
-            sumValue = queries.get(i).get(2);
+            value = queries.get(i).get(2);
 
-            for (int j = start-1; j < end-1; j++) {
-                temp.add(j, temp.get(j)+ sumValue);
-            }
+            temp.set(start-1, temp.get(start-1)+value );
+            temp.set(end, temp.get(end)-value );
+            
         }
-        int max = 0;
-        for (int i : temp) {
-            max = Math.max(i, max);
+        
+        
+        long sum = 0;
+        long max = 0;
+        
+        for(int i=0; i<n; i++) {
+            sum += temp.get(i);
+            
+            max = Math.max(max, sum);
         }
+
         return max;
+  
 
     }
 
