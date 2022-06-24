@@ -29,12 +29,12 @@ class Result {
         int count =0;
         
         for(int i =0; i< ar.size(); i++) {
-        	modTemp = ar.get(i)%k;	  // The place where bucket should go.
-        	
-        	count += ar.get((k-modTemp) % k);	//The place where it can make k. If there is value, add it.
-        	
-        	temp[modTemp]++;
-        	
+            modTemp = ar.get(i)%k;      // The place where bucket should go.
+            
+            count += temp[(k-modTemp) % k];    //The place where it can make k. If there is value, add to count.
+            
+            temp[modTemp]++;
+            
         }
         return count;
         
