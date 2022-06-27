@@ -22,35 +22,28 @@ class Result {
 	public static List<Integer> climbingLeaderboard(List<Integer> ranked, List<Integer> player) {
 		// Write your code here
 
-		ArrayList<Integer> temp = new ArrayList<Integer>();
-		ArrayList<Integer> answer = new ArrayList<Integer>();
+	  ArrayList<Integer> answer = new ArrayList<Integer>();
 
-		Collections.sort(ranked.stream().distinct().toList());
+        
+        List<Integer> temp = ranked.stream().distinct().collect(Collectors.toList());
+                
+        Collections.sort(temp);
+        
+        int stopTemp = 0;// we do not need to check from the beginning every time, if so, time out error
+        int max = temp.get(temp.size()-1);
+        for (int i = stopTemp; i < player.size(); i++) {
+            for (int j = stopTemp; j < temp.size(); j++) {
+                if (player.get(i) < temp.get(j)) {
+                    answer.add(temp.size() - j + 1);
+                    stopTemp = j;
+                    break;
+                }else if(j >= temp.size()-1) {
+                    answer.add(1);
+                }
 
-		System.out.println(ranked);
-		
-		int max = temp.get(temp.size() - 1);
-		System.out.println(max);
+            }
 
-		for (int i = 0; i < player.size(); i++) {
-			for (int j = 0; j < temp.size(); j++) {
-				if (player.get(i) < temp.get(j)) {
-					answer.add(temp.size() - j + 1);
-					
-					break;
-				} else if (player.get(i) == temp.get(j)) {
-					answer.add(temp.size() - j);
-					break;
-				}
-
-				if (player.get(i) > max) {
-					answer.add(1);
-					break;
-				}
-
-			}
-
-		}
+        }
 
 		return answer;
 	}
