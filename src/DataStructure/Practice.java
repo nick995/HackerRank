@@ -59,13 +59,12 @@ class SinglyLinkedListPrintHelper {
 class Result {
 
     /*
-     * Complete the 'insertNodeAtPosition' function below.
+     * Complete the 'deleteNode' function below.
      *
      * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
      * The function accepts following parameters:
      *  1. INTEGER_SINGLY_LINKED_LIST llist
-     *  2. INTEGER data
-     *  3. INTEGER position
+     *  2. INTEGER position
      */
 
     /*
@@ -78,65 +77,33 @@ class Result {
      *
      */
 
-    public static SinglyLinkedListNode insertNodeAtPosition(SinglyLinkedListNode llist, int data, int position) {
+    public static SinglyLinkedListNode deleteNode(SinglyLinkedListNode llist, int position) {
     // Write your code here
     	
-    	//create the node with data
-    	SinglyLinkedListNode newNode = new SinglyLinkedListNode(data);
+    	SinglyLinkedListNode temp = llist;
     	
-    	// 
-    	if(position == 0) {
-    		llist = newNode;
-    	}else {
-    		SinglyLinkedListNode temp = llist;
-    		//to reach position that we have to replace.
-    		for(int i =0; i<position-1; i++) {
-    			temp = temp.next;
-    		}
+    	if(position ==0) {
     		
-    		newNode.next = temp.next;
-    		temp.next = newNode;
+    		temp.next = temp.next.next;
+    		
+    		temp = null;
+    		return llist;
     	}
     	
+    	for(int i=0; i<position-1; i++) {
+    		temp = temp.next;
+    	}
+    	
+    	temp.next = temp.next.next;
+    	
     	return llist;
-    	
-    	
-    	
-    	
-    	
     }
+   
 
 }
 
-public class Solution {
+public class Practice {
     public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-
-        SinglyLinkedList llist = new SinglyLinkedList();
-
-        int llistCount = Integer.parseInt(bufferedReader.readLine().trim());
-
-        IntStream.range(0, llistCount).forEach(i -> {
-            try {
-                int llistItem = Integer.parseInt(bufferedReader.readLine().trim());
-
-                llist.insertNode(llistItem);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-
-        int data = Integer.parseInt(bufferedReader.readLine().trim());
-
-        int position = Integer.parseInt(bufferedReader.readLine().trim());
-
-        SinglyLinkedListNode llist_head = Result.insertNodeAtPosition(llist.head, data, position);
-
-        SinglyLinkedListPrintHelper.printList(llist_head, " ", bufferedWriter);
-        bufferedWriter.newLine();
-
-        bufferedReader.close();
-        bufferedWriter.close();
+        
     }
 }
