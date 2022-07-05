@@ -25,6 +25,20 @@ class Result {
 	public static int queensAttack(int n, int k, int r_q, int c_q, List<List<Integer>> obstacles) {
 		// Write your code here
 
+		int original = getOriginal(n, r_q, c_q);
+
+		int block = obstacleCount(n, r_q, c_q, k, obstacles);
+
+		return original - block;
+
+	}
+
+	public static int getOriginal(int square, int x, int y) {
+		int originalPossible = 0;
+		int n = square;
+		int r_q = x;
+		int c_q = y;
+
 		int rowSum = 0;
 		int colSum = 0;
 		int quadrant1 = 0;
@@ -32,22 +46,76 @@ class Result {
 		int quadrant3 = 0;
 		int quadrant4 = 0;
 
-		int originalPossible = 0;
-
 		rowSum = n - 1;
 		colSum = n - 1;
-		
-		for(int x1 = r_q, y1 = c_q; x1<= 5 || y1<= 5; x1++, y1++) {
-			
+		// quadrant1
+		for (int x1 = r_q + 1, y1 = c_q + 1; x1 < n || y1 < n; x1++, y1++) {
 			quadrant1++;
-			
 		}
-		
-		
-		
-		
-		
+		// quadrant2
+		for (int x2 = r_q + 1, y2 = c_q - 1; x2 < n || y2 > 1; x2++, y2--) {
+			quadrant2++;
+
+		}
+
+		// quadrant3
+		for (int x3 = r_q - 1, y3 = c_q - 1; x3 > 1 || y3 > 1; x3--, y3--) {
+			quadrant3++;
+		}
+		// quadrant3
+		for (int x4 = r_q - 1, y4 = c_q + 1; x4 > 1 || y4 < n; x4--, y4++) {
+			quadrant4++;
+		}
+
 		originalPossible = rowSum + colSum + quadrant1 + quadrant2 + quadrant3 + quadrant4;
+
+		return originalPossible;
+
+	}
+
+	public static int obstacleCount(int n, int r_q, int c_q, int obstacleNum, List<List<Integer>> obstacles) {
+
+		int row = 0;
+		int col = 0;
+
+		int blockCount = 0;
+
+		int temp = 0;
+
+		if (obstacles.get(0).size() != 0) {
+
+			for (int i = 0; i < obstacles.get(0).size(); i++) {
+				row = obstacles.get(i).get(0);
+				col = obstacles.get(i).get(1);
+
+				// case 1.
+				if (row == r_q) {
+					blockCount += Math.min(col - 0, n - col);
+				}
+
+				if (col == c_q) {
+					blockCount += Math.min(row - 0, n - row);
+				}
+
+				if (Math.abs(row - r_q) == Math.abs(col - c_q)) {
+
+					// quadrant 1.
+					if (row > r_q && col > c_q) {
+						blockCount += Math.min(n - row + 1, n - col + 1);
+					} else if (row > r_q && col < c_q) {
+						blockCount += Math.min(n - row + 1, col - 0 + 1);
+					} else if (row < r_q && col < c_q) {
+						blockCount += Math.min(row - 0 + 1, col - 0 + 1);
+					} else if (row < r_q && col > c_q) {
+						blockCount += Math.min(row - 0 + 1, n - col + 1);
+
+					}
+				}
+
+			}
+		}
+
+		return blockCount;
 
 	}
 

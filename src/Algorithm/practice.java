@@ -10,17 +10,20 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		int n = 8;
-		int k = 3;
+		int n = 4;
+		int k = 0;
 
 		int r_q = 4;
 		int c_q = 4;
 
 		int[][] obstacles = new int[n][n];
-
-		obstacles[4][2] =
-
-				getOriginal(n, r_q, c_q);
+		
+		obstacles[0][0] = 5;
+		obstacles[0][1] = 5;
+		
+		System.out.println(getOriginal(n, r_q, c_q));
+		
+//		System.out.println(obstacleCount(n, r_q, c_q, n, obstacles));
 
 	}
 
@@ -39,92 +42,75 @@ public class practice {
 
 		rowSum = n - 1;
 		colSum = n - 1;
-
-		System.out.println("quadrant 1 ");
 		// quadrant1
-		for (int x1 = r_q + 1, y1 = c_q + 1; x1 < n || y1 < n; x1++, y1++) {
-
-			System.out.println(x1 + " " + y1);
-
+		for (int x1 = r_q + 1, y1 = c_q + 1; x1 <= n && y1 <= n; x1++, y1++) {
 			quadrant1++;
 		}
-
-		System.out.println("quadrant 1 possible = " + quadrant1);
-		System.out.println();
-
-		System.out.println("quadrant 2 ");
 		// quadrant2
-		for (int x2 = r_q + 1, y2 = c_q - 1; x2 < n || y2 > 1; x2++, y2--) {
-
-			System.out.println(x2 + " " + y2);
-
+		for (int x2 = r_q + 1, y2 = c_q - 1; x2 <= n && y2 >= 1; x2++, y2--) {
 			quadrant2++;
 
 		}
-		System.out.println("quadrant 2 possible = " + quadrant2);
-
-		System.out.println("quadra 3 ");
 
 		// quadrant3
-		for (int x3 = r_q - 1, y3 = c_q - 1; x3 > 1 || y3 > 1; x3--, y3--) {
-
-			System.out.println(x3 + " " + y3);
-
+		for (int x3 = r_q - 1, y3 = c_q - 1; x3 >= 1 && y3 >= 1; x3--, y3--) {
 			quadrant3++;
-
 		}
-
-		System.out.println("quadrant 3 possible = " + quadrant3);
-
-		System.out.println("quadra 4 ");
-
 		// quadrant3
-		for (int x4 = r_q - 1, y4 = c_q + 1; x4 > 1 || y4 < n; x4--, y4++) {
-
-			System.out.println(x4 + " " + y4);
-
+		for (int x4 = r_q - 1, y4 = c_q + 1; x4 >= 1 && y4 <= n; x4--, y4++) {
 			quadrant4++;
 		}
 
-		System.out.println("quadrant 4 possible = " + quadrant4);
-
 		originalPossible = rowSum + colSum + quadrant1 + quadrant2 + quadrant3 + quadrant4;
-
-		System.out.println(originalPossible);
 
 		return originalPossible;
 
 	}
 
-	public static int obstacleCount(int n, int r_q, int c_q, int obstacleNum, List<List<Integer>> obstacles) {
+	public static int obstacleCount(int n, int r_q, int c_q, int obstacleNum, int[][] obstacles) {
 
 		int row = 0;
 		int col = 0;
 
 		int blockCount = 0;
 
-		int temp =0;
-		
-		for (int i = 0; i < obstacles.get(0).size(); i++) {
-			row = obstacles.get(i).get(0);
-			col = obstacles.get(i).get(1);
+		int temp = 0;
+
+		for (int i = 0; i < 1; i++) {
+			row = obstacles[i][0];
+			col = obstacles[i][1];
 
 			// case 1.
 			if (row == r_q) {
-				blockCount += Math.min(col - 0, col - n);
+				blockCount += Math.min(col - 0, n - col);
 			}
 
 			if (col == c_q) {
-				blockCount += Math.min(row - 0, row - n);
+				blockCount += Math.min(row - 0, n - row);
 			}
-			
-			if(Math.abs(row-r_q) + Math.abs(col-c_q) % 2 == 0 ) {
-				
+
+			if (Math.abs(row - r_q) == Math.abs(col - c_q)) {
+
+				// quadrant 1.
+				if (row > r_q && col > c_q) {
+					blockCount += Math.min(n - row+1, n - col+1);
+					System.out.println("quadrant 1");
+				} else if (row > r_q && col < c_q) {
+					blockCount += Math.min(n - row+1, col - 0+1);
+					System.out.println("quadrant 2");
+				} else if (row < r_q && col < c_q) {
+					blockCount += Math.min(row - 0+1, col - 0+1);
+					System.out.println("quadrant 3");
+				}else if (row < r_q && col> c_q) {
+					blockCount += Math.min(row-0+1, n-col+1);
+					System.out.println("quadrant 4");
+
+				}
 			}
 
 		}
 
-		return obstacleNum;
+		return blockCount;
 
 	}
 }
