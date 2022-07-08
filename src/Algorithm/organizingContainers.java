@@ -15,18 +15,43 @@ class Result {
     /*
      * Complete the 'organizingContainers' function below.
      *
-     * The function is expected to return a STRING.
-     * The function accepts 2D_INTEGER_ARRAY container as parameter.
+     * The function is expected to return a STRING. The function accepts
+     * 2D_INTEGER_ARRAY container as parameter.
      */
 
     public static String organizingContainers(List<List<Integer>> container) {
-    // Write your code here
-    	
-    	int n = container.get(0).size();
-    	
-    	int[] container1 = new int[n];
-    	int[] container2 = new int[n];
-    	
+        // Write your code here
+
+        int n = container.get(0).size();
+
+        ArrayList<Integer> rowBucket = new ArrayList<Integer>(n);
+        ArrayList<Integer> colBucket = new ArrayList<Integer>(n);
+
+        for (int x = 0; x < container.size(); x++) {
+            rowBucket.add(0);
+            colBucket.add(0);
+        }
+
+        for (int i = 0; i < container.size(); i++) {
+
+            int temp = 0;
+
+            for (int j = 0; j < container.get(0).size(); j++) {
+
+                colBucket.set(j, colBucket.get(j) + container.get(i).get(j));
+                temp += container.get(i).get(j);
+            }
+            rowBucket.set(i, temp);
+        }
+
+        Collections.sort(rowBucket);
+        Collections.sort(colBucket);
+
+        if (rowBucket.equals(colBucket)) {
+            return "Possible";
+        } else {
+            return "Impossible";
+        }
     }
 
 }
@@ -46,11 +71,8 @@ public class Solution {
 
                 IntStream.range(0, n).forEach(i -> {
                     try {
-                        container.add(
-                            Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
-                                .map(Integer::parseInt)
-                                .collect(toList())
-                        );
+                        container.add(Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+                                .map(Integer::parseInt).collect(toList()));
                     } catch (IOException ex) {
                         throw new RuntimeException(ex);
                     }
