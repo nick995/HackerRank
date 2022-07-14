@@ -57,7 +57,7 @@ class Result {
         sortString = tempAnswer.substring(temp+1, w.length());
         
         char[] arr = sortString.toCharArray();
-        
+        //sort
         Arrays.sort(arr);
         
         
