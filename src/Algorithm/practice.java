@@ -11,33 +11,50 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		String s = "haveaniceday";
+		// abcdefg
+		String w = "dkhc";
+
+		char tempChar = ' ';		
+		StringBuilder tempAnswer = new StringBuilder(w);
+		String sortString = " ";
 		
-		int row = (int) Math.sqrt(s.length());
+		int temp = 0;
+
+		int temp2 = 0;
 		
-		int col =  (int) Math.ceil(Math.sqrt(s.length()));
-		
-		HashMap<Integer, List<Character>> temp = new HashMap<Integer, List<Character>>();
-		// initializing
-		for (int i = 0; i < col; i++) {
-			temp.put(i, new ArrayList<Character>());
-		}
-
-		for (int i = 0; i < s.length(); i++) {
-
-			temp.get(i % col).add(s.charAt(i));
-		}
-		StringBuilder tempanswer = new StringBuilder();
-
-		for (Entry<Integer, List<Character>> l : temp.entrySet()) {
-
-			for (char c : l.getValue()) {
-				tempanswer.append(c);
+		boolean find = false;
+		for (int i = 0; i < w.length() - 1; i++) {
+			if (Character.compare(w.charAt(i), w.charAt(i + 1)) < 0) {
+				temp = i;
+				find = true;
 			}
-			tempanswer.append(" ");
-
 		}
-		System.out.println(tempanswer.toString());
-
+		
+		if(find == false) {
+			return "no answer";
+		}
+		
+		for(int j = w.length()-1; j>=temp; j--) {
+			if(Character.compare(w.charAt(j), w.charAt(temp))>0 ) {
+				temp2 = j;
+				tempChar = w.charAt(j);
+				break;
+				
+			}
+		}
+		System.out.println(tempAnswer);
+		//swap
+		tempAnswer.setCharAt(temp2, tempAnswer.charAt(temp));
+		tempAnswer.setCharAt(temp, tempChar);
+		
+		sortString = tempAnswer.substring(temp+1, w.length());
+		
+		char[] arr = sortString.toCharArray();
+		
+		Arrays.sort(arr);
+		
+		
+		tempAnswer.replace(temp+1, tempAnswer.length(), String.valueOf(arr) );
+				
 	}
 }
