@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Collectors;
 
 public class practice {
 
@@ -11,50 +12,36 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		// abcdefg
-		String w = "dkhc";
+		int[] numbers = new int[5];
+		int[] answer = {};
 
-		char tempChar = ' ';		
-		StringBuilder tempAnswer = new StringBuilder(w);
-		String sortString = " ";
-		
-		int temp = 0;
+		int possible = 0;
+		numbers[0] = 2;
+		numbers[1] = 1;
+		numbers[2] = 3;
+		numbers[3] = 4;
+		numbers[4] = 1;
+		ArrayList<Integer> temp = new ArrayList<Integer>();
 
-		int temp2 = 0;
-		
-		boolean find = false;
-		for (int i = 0; i < w.length() - 1; i++) {
-			if (Character.compare(w.charAt(i), w.charAt(i + 1)) < 0) {
-				temp = i;
-				find = true;
+		for (int i = 0; i < numbers.length; i++) {
+			for (int j = i + 1; j < numbers.length; j++) {
+				possible = numbers[i] + numbers[j];
+				temp.add(possible);
 			}
 		}
-		
-		if(find == false) {
-			return "no answer";
+
+		Collections.sort(temp);
+
+		temp = (ArrayList<Integer>) temp.stream().distinct().collect(Collectors.toList());
+		int tempInt = 0 ;
+		for(int i : temp) {
+			answer[tempInt] = i;
+			tempInt++;
 		}
-		
-		for(int j = w.length()-1; j>=temp; j--) {
-			if(Character.compare(w.charAt(j), w.charAt(temp))>0 ) {
-				temp2 = j;
-				tempChar = w.charAt(j);
-				break;
-				
-			}
-		}
-		System.out.println(tempAnswer);
-		//swap
-		tempAnswer.setCharAt(temp2, tempAnswer.charAt(temp));
-		tempAnswer.setCharAt(temp, tempChar);
-		
-		sortString = tempAnswer.substring(temp+1, w.length());
-		
-		char[] arr = sortString.toCharArray();
-		
-		Arrays.sort(arr);
+		tempInt = 0;
 		
 		
-		tempAnswer.replace(temp+1, tempAnswer.length(), String.valueOf(arr) );
-				
+		
+		
 	}
 }
