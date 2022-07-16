@@ -23,7 +23,12 @@ class Result {
 
     public static String gridSearch(List<String> G, List<String> P) {
     // Write your code here
-
+    	
+    	String answer = "NO";
+    	
+    	
+    	
+    	return temp.toString();
     }
 
 }

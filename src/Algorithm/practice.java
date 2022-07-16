@@ -12,36 +12,65 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		int[] numbers = new int[5];
-		int[] answer = {};
+		// target list
+		List<String> G = new ArrayList<String>();
 
-		int possible = 0;
-		numbers[0] = 2;
-		numbers[1] = 1;
-		numbers[2] = 3;
-		numbers[3] = 4;
-		numbers[4] = 1;
-		ArrayList<Integer> temp = new ArrayList<Integer>();
+		// that we have to find
+		List<String> P = new ArrayList<String>();
 
-		for (int i = 0; i < numbers.length; i++) {
-			for (int j = i + 1; j < numbers.length; j++) {
-				possible = numbers[i] + numbers[j];
-				temp.add(possible);
+		G.add("7283455864");
+		G.add("6731158619");
+		G.add("8988242643");
+		G.add("3830589324");
+		G.add("2229505813");
+		G.add("5633845374");
+		G.add("6473530293");
+		G.add("7053106601");
+		G.add("0834282956");
+		G.add("4607924137");
+
+		P.add("9505");
+		P.add("3845");
+		P.add("3530");
+
+		// x
+		int row = P.get(0).length();
+		// y
+		int col = P.size();
+
+		int temp = 0;
+
+		int startIndex = 0;
+		int endIndex = 0;
+		int j = 0;
+		String tempString = " ";
+		String answer = "NO";
+
+		for (String s : G) {
+
+			if (s.contains(P.get(0))) {
+
+				startIndex = s.indexOf(P.get(0));
+				endIndex = startIndex + row;
+				// List
+				for (int i = temp; i < temp + col; i++, j++) {
+					tempString = G.get(i).substring(startIndex, endIndex);
+					System.out.println(tempString);
+
+					if(tempString.equals(P.get(j))) {
+						answer = "YES";
+						System.out.println(answer);
+					}else {
+						answer = "NO";
+						break;
+					}
+				}
+				j = 0;
+
 			}
+			temp++;
 		}
-
-		Collections.sort(temp);
-
-		temp = (ArrayList<Integer>) temp.stream().distinct().collect(Collectors.toList());
-		int tempInt = 0 ;
-		for(int i : temp) {
-			answer[tempInt] = i;
-			tempInt++;
-		}
-		tempInt = 0;
 		
-		
-		
-		
+		System.out.println(answer);
 	}
 }
