@@ -57,20 +57,25 @@ public class practice {
 					tempString = G.get(i).substring(startIndex, endIndex);
 					System.out.println(tempString);
 
-					if(tempString.equals(P.get(j))) {
+					if (tempString.equals(P.get(j))) {
 						answer = "YES";
 						System.out.println(answer);
-					}else {
+					} else {
 						answer = "NO";
 						break;
 					}
+
+					if (answer.equals("YES")) {
+						break;
+					}
+
 				}
 				j = 0;
 
 			}
 			temp++;
 		}
-		
+
 		System.out.println(answer);
 	}
 }
