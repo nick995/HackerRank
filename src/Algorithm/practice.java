@@ -51,7 +51,6 @@ public class practice {
 				endIndex = startIndex + row;
 				continious = s.lastIndexOf(P.get(0));
 
-
 				// List
 				for (int i = temp; i < temp + col; i++, j++) {
 
@@ -74,38 +73,28 @@ public class practice {
 									answer = "NO";
 									tempI = i;
 									count = 0;
-									break; 
+									break;
 								}
 							}
-							
-							if(count == col) {
-								System.out.println("return yes" );
+
+							if (count == col) {
+								System.out.println("return yes");
 								break;
 							}
 
 						}
 
-					} else {
-
-						tempString = G.get(i).substring(startIndex, endIndex);
-
-						if (tempString.equals(P.get(j))) {
-							answer = "YES";
-						} else {
-							answer = "NO";
-							break;
-						}
 					}
+					j = 0;
+
 				}
-				j = 0;
+				if (answer.equals("YES")) {
+					break;
+				}
+				temp++;
+			}
 
-			}
-			if (answer.equals("YES")) {
-				break;
-			}
-			temp++;
+			System.out.println(answer);
 		}
-
-		System.out.println(answer);
 	}
 }
