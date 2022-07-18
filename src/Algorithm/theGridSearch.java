@@ -23,12 +23,86 @@ class Result {
 
     public static String gridSearch(List<String> G, List<String> P) {
     // Write your code here
-    	
-    	String answer = "NO";
-    	
-    	
-    	
-    	return temp.toString();
+            // x
+        int row = P.get(0).length();
+        // y
+        int col = P.size();
+
+        int temp = 0;
+
+        int startIndex = 0;
+        int endIndex = 0;
+        int j = 0;
+
+        int continious = 0;
+        int count = 0;
+        String tempString = "";
+        String answer = "NO";
+
+        for (String s : G) {
+
+            //
+            if (s.contains(P.get(0))) {
+
+                startIndex = s.indexOf(P.get(0));
+                endIndex = startIndex + row;
+                continious = s.lastIndexOf(P.get(0));
+
+
+                // List
+                for (int i = temp; i < temp + col; i++, j++) {
+
+                    if (startIndex != continious) {
+
+                        int tempI = i;
+
+                        for (int z = startIndex; z <= continious; z++) {
+
+                            while (count != col) {
+
+                                tempString = G.get(tempI).substring(z, z + row);
+
+                                if (tempString.equals(P.get(count))) {
+                                    answer = "YES";
+                                    tempI++;
+                                    count++;
+
+                                } else {
+                                    answer = "NO";
+                                    tempI = i;
+                                    count = 0;
+                                    break; 
+                                }
+                            }
+                            
+                            if(count == col) {
+                                return answer;
+                            }
+
+                        }
+
+                    } else {
+
+                        tempString = G.get(i).substring(startIndex, endIndex);
+
+                        if (tempString.equals(P.get(j))) {
+                            answer = "YES";
+                        } else {
+                            answer = "NO";
+                            break;
+                        }
+                    }
+                }
+                j = 0;
+
+            }
+            if (answer.equals("YES")) {
+                break;
+            }
+            temp++;
+        }
+
+        return answer;
     }
 
 }

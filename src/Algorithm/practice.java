@@ -18,20 +18,13 @@ public class practice {
 		// that we have to find
 		List<String> P = new ArrayList<String>();
 
-		G.add("7283455864");
-		G.add("6731158619");
-		G.add("8988242643");
-		G.add("3830589324");
-		G.add("2229505813");
-		G.add("5633845374");
-		G.add("6473530293");
-		G.add("7053106601");
-		G.add("0834282956");
-		G.add("4607924137");
+		G.add("11111111");
+		G.add("22222222");
+		G.add("33033333");
 
-		P.add("9505");
-		P.add("3845");
-		P.add("3530");
+		P.add("11");
+		P.add("22");
+		P.add("33");
 
 		// x
 		int row = P.get(0).length();
@@ -43,35 +36,72 @@ public class practice {
 		int startIndex = 0;
 		int endIndex = 0;
 		int j = 0;
-		String tempString = " ";
+
+		int continious = 0;
+		int count = 0;
+		String tempString = "";
 		String answer = "NO";
 
 		for (String s : G) {
 
+			//
 			if (s.contains(P.get(0))) {
 
 				startIndex = s.indexOf(P.get(0));
 				endIndex = startIndex + row;
+				continious = s.lastIndexOf(P.get(0));
+
+
 				// List
 				for (int i = temp; i < temp + col; i++, j++) {
-					tempString = G.get(i).substring(startIndex, endIndex);
-					System.out.println(tempString);
 
-					if (tempString.equals(P.get(j))) {
-						answer = "YES";
-						System.out.println(answer);
+					if (startIndex != continious) {
+
+						int tempI = i;
+
+						for (int z = startIndex; z < continious; z++) {
+
+							while (count != col) {
+
+								tempString = G.get(tempI).substring(z, z + row);
+
+								if (tempString.equals(P.get(count))) {
+									answer = "YES";
+									tempI++;
+									count++;
+
+								} else {
+									answer = "NO";
+									tempI = i;
+									count = 0;
+									break; 
+								}
+							}
+							
+							if(count == col) {
+								System.out.println("return yes" );
+								break;
+							}
+
+						}
+
 					} else {
-						answer = "NO";
-						break;
-					}
 
-					if (answer.equals("YES")) {
-						break;
-					}
+						tempString = G.get(i).substring(startIndex, endIndex);
 
+						if (tempString.equals(P.get(j))) {
+							answer = "YES";
+						} else {
+							answer = "NO";
+							break;
+						}
+					}
 				}
 				j = 0;
 
+			}
+			if (answer.equals("YES")) {
+				break;
 			}
 			temp++;
 		}
