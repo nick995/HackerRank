@@ -12,89 +12,85 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		// target list
-		List<String> G = new ArrayList<String>();
+		int n = 10;
+		int k = 9;
 
-		// that we have to find
-		List<String> P = new ArrayList<String>();
+		int value = 0;
 
-		G.add("11111111");
-		G.add("22222222");
-		G.add("33033333");
+		List<Integer> temp = new ArrayList<Integer>();
 
-		P.add("11");
-		P.add("22");
-		P.add("33");
+		List<Integer> answer = new ArrayList<Integer>();
 
-		// x
-		int row = P.get(0).length();
-		// y
-		int col = P.size();
+		HashMap<Integer, Boolean> checker = new HashMap<Integer, Boolean>();
 
-		int temp = 0;
+		for (int i = 1; i <= n; i++) {
+			checker.put(i, false);
+			temp.add(i);
+		}
 
-		int startIndex = 0;
-		int endIndex = 0;
-		int j = 0;
+		int low = 0;
+		int high = 0;
 
-		int continious = 0;
-		int count = 0;
-		String tempString = "";
-		String answer = "NO";
-
-		for (String s : G) {
-
-			//
-			if (s.contains(P.get(0))) {
-
-				startIndex = s.indexOf(P.get(0));
-				endIndex = startIndex + row;
-				continious = s.lastIndexOf(P.get(0));
-
-				// List
-				for (int i = temp; i < temp + col; i++, j++) {
-
-					if (startIndex != continious) {
-
-						int tempI = i;
-
-						for (int z = startIndex; z < continious; z++) {
-
-							while (count != col) {
-
-								tempString = G.get(tempI).substring(z, z + row);
-
-								if (tempString.equals(P.get(count))) {
-									answer = "YES";
-									tempI++;
-									count++;
-
-								} else {
-									answer = "NO";
-									tempI = i;
-									count = 0;
-									break;
-								}
-							}
-
-							if (count == col) {
-								System.out.println("return yes");
-								break;
-							}
-
-						}
-
-					}
-					j = 0;
-
+		for (int i : temp) {
+			//two possible number.
+			low = i - k;
+			high = i + k;
+			
+			if(k>=i) {
+				answer.add(high);
+				checker.replace(high, true);
+			}else if(k<i) {
+				if(checker.get(low)== true) {
+					answer.add(high);
+					checker.replace(high, true);
+				}else {
+					answer.add(low);
+					checker.replace(low, true);
 				}
-				if (answer.equals("YES")) {
-					break;
-				}
-				temp++;
 			}
-
+		}
+		
+		if(checker.containsValue(false)) {
+			answer.clear();
+			answer.add(-1);
+			System.out.println(answer);
+		}else {
 			System.out.println(answer);
 		}
+
+//		for (int i : temp) {
+//			if (i <= k) {
+//
+//				value = i + k;
+//
+//				if ((int) Math.abs(value - i) == k) {
+//					answer.add(value);
+//				}
+//
+//			} else if (i > k) {
+//
+//				value = i - k;
+//
+//				if (Math.abs(i - value) == k) {
+//					answer.add(i - k);
+//				}
+//
+//			}
+//		}
+//
+//		List<Integer> tempAnswer = new ArrayList<Integer>(answer);
+//
+//		System.out.println(answer);
+//
+//		Collections.sort(tempAnswer);
+//
+//		if (!temp.equals(tempAnswer)) {
+//			answer.clear();
+//			answer.add(-1);
+//			System.out.println(answer);
+//		} else {
+//			System.out.println(answer);
+//		}
+
 	}
 }
