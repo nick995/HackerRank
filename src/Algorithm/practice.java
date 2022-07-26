@@ -12,7 +12,7 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		int n = 2;
+		int n = 5;
 
 		List<String> grid = new ArrayList<String>();
 		grid.add(".......");
@@ -26,7 +26,7 @@ public class practice {
 
 		ArrayList<String> answer = new ArrayList<String>();
 
-		ArrayList<StringBuilder> temp = new ArrayList<StringBuilder>();
+		List<StringBuilder> temp = new ArrayList<StringBuilder>();
 
 		StringBuilder tempSb = new StringBuilder();
 
@@ -36,13 +36,14 @@ public class practice {
 		// nothing happen
 		if (n == 1) {
 			return grid;
-		} 
-		
-		
+		}
+
+		// for 2,3,4 needed.
 		for (int i = 0; i < grid.get(0).length(); i++) {
 			tempS += "O";
 		}
 
+		// for 2,3,4 needed.
 		for (int i = 0; i < grid.size(); i++) {
 			tempSb = new StringBuilder(tempS);
 			temp.add(tempSb);
@@ -56,12 +57,8 @@ public class practice {
 			return answer;
 		}
 
-		//
-
 		for (int i = 0; i < grid.size(); i++) {
 			for (int j = 0; j < grid.get(0).length(); j++) {
-
-				System.out.println("i = " + i + " J = " + j);
 				if (grid.get(i).charAt(j) == 'O') {
 
 					// middle
@@ -84,6 +81,23 @@ public class practice {
 			}
 		}
 
+		for (StringBuilder sb : temp) {
+			answer.add(sb.toString());
+		}
+
+		if (n % 4 == 3) {
+			return answer;
+		} else if (n % 4 == 1) {
+			temp = explosionCalculate(answer, 1);
+			answer.clear();
+			for (StringBuilder sb : temp) {
+				answer.add(sb.toString());
+			}
+		}
+		
+		return answer;
+
+
 	}
 
 	public static List<StringBuilder> explosionCalculate(List<String> grid, int n) {
@@ -102,15 +116,9 @@ public class practice {
 			tempSb = new StringBuilder(tempS);
 			temp.add(tempSb);
 		}
-
-		if (n % 2 != 0) {
-
-		}
-
 		for (int i = 0; i < grid.size(); i++) {
 			for (int j = 0; j < grid.get(0).length(); j++) {
 
-				System.out.println("i = " + i + " J = " + j);
 				if (grid.get(i).charAt(j) == 'O') {
 
 					// middle
