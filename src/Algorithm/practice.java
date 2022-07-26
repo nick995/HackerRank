@@ -12,85 +12,128 @@ public class practice {
 
 	public static void main(String[] args) {
 
-		int n = 10;
-		int k = 9;
+		int n = 2;
 
-		int value = 0;
+		List<String> grid = new ArrayList<String>();
+		grid.add(".......");
+		grid.add("...O...");
+		grid.add("....O..");
+		grid.add(".......");
+		grid.add("OO.....");
+		grid.add("OO.....");
 
-		List<Integer> temp = new ArrayList<Integer>();
+		// =============================================================
 
-		List<Integer> answer = new ArrayList<Integer>();
+		ArrayList<String> answer = new ArrayList<String>();
 
-		HashMap<Integer, Boolean> checker = new HashMap<Integer, Boolean>();
+		ArrayList<StringBuilder> temp = new ArrayList<StringBuilder>();
 
-		for (int i = 1; i <= n; i++) {
-			checker.put(i, false);
-			temp.add(i);
+		StringBuilder tempSb = new StringBuilder();
+
+		String tempS = "";
+
+		int cycle = 0;
+		// nothing happen
+		if (n == 1) {
+			return grid;
+		} 
+		
+		
+		for (int i = 0; i < grid.get(0).length(); i++) {
+			tempS += "O";
 		}
 
-		int low = 0;
-		int high = 0;
+		for (int i = 0; i < grid.size(); i++) {
+			tempSb = new StringBuilder(tempS);
+			temp.add(tempSb);
+		}
 
-		for (int i : temp) {
-			//two possible number.
-			low = i - k;
-			high = i + k;
-			
-			if(k>=i) {
-				answer.add(high);
-				checker.replace(high, true);
-			}else if(k<i) {
-				if(checker.get(low)== true) {
-					answer.add(high);
-					checker.replace(high, true);
-				}else {
-					answer.add(low);
-					checker.replace(low, true);
+		// first case all bomb.
+		if (n % 2 == 0) {
+			for (StringBuilder sb : temp) {
+				answer.add(sb.toString());
+			}
+			return answer;
+		}
+
+		//
+
+		for (int i = 0; i < grid.size(); i++) {
+			for (int j = 0; j < grid.get(0).length(); j++) {
+
+				System.out.println("i = " + i + " J = " + j);
+				if (grid.get(i).charAt(j) == 'O') {
+
+					// middle
+					temp.get(i).setCharAt(j, '.');
+
+					// up side
+					if (i - 1 >= 0) {
+						temp.get(i - 1).setCharAt(j, '.');
+					} // left side
+					if (j - 1 >= 0) {
+						temp.get(i).setCharAt(j - 1, '.');
+					} // right side
+					if (j + 1 < grid.get(0).length()) {
+						temp.get(i).setCharAt(j + 1, '.');
+					} // down side.
+					if (i + 1 < grid.size()) {
+						temp.get(i + 1).setCharAt(j, '.');
+					}
 				}
 			}
 		}
-		
-		if(checker.containsValue(false)) {
-			answer.clear();
-			answer.add(-1);
-			System.out.println(answer);
-		}else {
-			System.out.println(answer);
+
+	}
+
+	public static List<StringBuilder> explosionCalculate(List<String> grid, int n) {
+
+		ArrayList<StringBuilder> temp = new ArrayList<StringBuilder>();
+
+		StringBuilder tempSb = new StringBuilder();
+
+		String tempS = "";
+
+		for (int i = 0; i < grid.get(0).length(); i++) {
+			tempS += "O";
 		}
 
-//		for (int i : temp) {
-//			if (i <= k) {
-//
-//				value = i + k;
-//
-//				if ((int) Math.abs(value - i) == k) {
-//					answer.add(value);
-//				}
-//
-//			} else if (i > k) {
-//
-//				value = i - k;
-//
-//				if (Math.abs(i - value) == k) {
-//					answer.add(i - k);
-//				}
-//
-//			}
-//		}
-//
-//		List<Integer> tempAnswer = new ArrayList<Integer>(answer);
-//
-//		System.out.println(answer);
-//
-//		Collections.sort(tempAnswer);
-//
-//		if (!temp.equals(tempAnswer)) {
-//			answer.clear();
-//			answer.add(-1);
-//			System.out.println(answer);
-//		} else {
-//			System.out.println(answer);
-//		}
+		for (int i = 0; i < grid.size(); i++) {
+			tempSb = new StringBuilder(tempS);
+			temp.add(tempSb);
+		}
+
+		if (n % 2 != 0) {
+
+		}
+
+		for (int i = 0; i < grid.size(); i++) {
+			for (int j = 0; j < grid.get(0).length(); j++) {
+
+				System.out.println("i = " + i + " J = " + j);
+				if (grid.get(i).charAt(j) == 'O') {
+
+					// middle
+					temp.get(i).setCharAt(j, '.');
+
+					// up side
+					if (i - 1 >= 0) {
+						temp.get(i - 1).setCharAt(j, '.');
+					} // left side
+					if (j - 1 >= 0) {
+						temp.get(i).setCharAt(j - 1, '.');
+					} // right side
+					if (j + 1 < grid.get(0).length()) {
+						temp.get(i).setCharAt(j + 1, '.');
+					} // down side.
+					if (i + 1 < grid.size()) {
+						temp.get(i + 1).setCharAt(j, '.');
+					}
+				}
+			}
+		}
+
+		return temp;
 
 	}
 }
