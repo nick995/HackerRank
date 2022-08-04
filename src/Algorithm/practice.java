@@ -15,8 +15,8 @@ public class practice {
 	public static void main(String[] args) {
 
 		List<String> grid = new ArrayList<String>();
-		
-		//TEST 1
+
+		// TEST 1
 		grid.add("BBBGBGBBB");
 		grid.add("BBBGBGBBB");
 		grid.add("BBBGBGBBB");
@@ -27,8 +27,7 @@ public class practice {
 		grid.add("BBBGBGBBB");
 		grid.add("BBBGBGBBB");
 		grid.add("BBBGBGBBB");
-		
-		
+
 //		grid.add("BBBGBBB");
 //		grid.add("BBBGBBB");
 //		grid.add("BGGGGGB");
@@ -37,10 +36,8 @@ public class practice {
 		ArrayList<StringBuilder> temp = new ArrayList<StringBuilder>();
 
 		StringBuilder sbTemp = new StringBuilder("");
-		
-		
-		HashMap<Point, SquareData> sqData = new HashMap<Point, SquareData>();
-		
+
+		HashMap<Point, ArrayList<SquareData>> sqData = new HashMap<Point, ArrayList<SquareData>>();
 
 		for (int i = 0; i < grid.size(); i++) {
 			sbTemp = new StringBuilder("");
@@ -61,7 +58,7 @@ public class practice {
 		Point main = new Point();
 
 		int cycle = 0;
-		
+
 		int numberth = 0;
 
 		boolean available = true;
@@ -75,11 +72,11 @@ public class practice {
 
 					// initalize
 					main = new Point(x, y);
-					
+
 					do {
 						// checking square
 						available = true;
-						
+
 						cycle++;
 
 						// top side
@@ -114,25 +111,30 @@ public class practice {
 
 						if (available == true) {
 							
+							if(!sqData.containsKey(main)) {
+								ArrayList<SquareData> templist = new ArrayList<SquareData>();
+								sqData.put(main, templist);
+							}
+
 							SquareData data = new SquareData();
-							
+
 							data.pointCord.add(top);
 							data.pointCord.add(bottom);
 							data.pointCord.add(left);
 							data.pointCord.add(right);
 							data.pointCord.add(main);
-							
-							data.squareSize = cycle*4 + 1;
-							
+
+							data.squareSize = cycle * 4 + 1;
+
 							data.main = main;
-						
-							sqData.put(main, data);
-							
-//							System.out.println(main.x + " " + main.y + " available = " + available + " CYCLE = " +  cycle);
 														
+							sqData.get(main).add(data);
 							
-						}else {
-							cycle--;		
+
+//							System.out.println(main.x + " " + main.y + " available = " + available + " CYCLE = " +  cycle);
+
+						} else {
+							cycle--;
 						}
 
 					} while (available = true);
@@ -141,12 +143,58 @@ public class practice {
 			}
 		}
 		
-		//almost done.
-		for(Map.Entry<Point, SquareData> sq : sqData.entrySet() ) {
-						
-		}
-				
+		int max =0;
+			
+		Optional<Point> firstKey = sqData.keySet().stream().findFirst();
 		
+		Point fKey = firstKey.get();
+		
+		Iterator<Point> itr = sqData.keySet().iterator();
+		
+		itr.next();
+		
+		for(SquareData sd : sqData.get(fKey)) {
+			
+			while(itr.hasNext()) {
+								
+				Point key =	itr.next();
+				
+				ArrayList<SquareData> value = sqData.get(key);
+				
+				ArrayList<Point> check = new ArrayList<Point>();
+				
+				for(int i=0; i< value.size(); i++) {
+					
+					System.out.println("checked = " + value.get(i).main);
+					
+					System.out.println("Point cord = " + value.get(i).pointCord);
+					
+					System.out.println("Main = " + sd.main);
+					
+					System.out.println("Point cord = " + sd.pointCord);
+					
+					System.out.println(value.get(i).pointCord.retainAll(sd.getPointCord()) );
+					
+					check = value.get(i).pointCord.retainAll(sd.getPointCord());
+					
+					if(value.get(i).pointCord.retainAll(sd.getPointCord()) == false) {
+						
+
+						if(sd.squareSize*value.get(i).squareSize> max) {
+							max = sd.squareSize*value.get(i).squareSize;
+						}
+					}else {
+						break;
+					}
+					
+					
+				}
+				
+				
+			}
+		}
+		
+		System.out.println(max);
 	}
 }
 
@@ -157,13 +205,13 @@ class SquareData {
 	ArrayList<Point> pointCord;
 
 	boolean duplicated;
-	
+
 	Point main;
 
 	public SquareData() {
 
 		main = new Point();
-		
+
 		squareSize = 0;
 
 		pointCord = new ArrayList<Point>();
