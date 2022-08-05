@@ -44,31 +44,44 @@ public class practice {
 //		grid.add("GBBBGGBGG");
 //		grid.add("GBBBGGBGG");
 //		grid.add("GGGGGGGGG");
-		
-		//TEST 21 
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("GGGGGGGGGGGGGGG");
-//		grid.add("GGGGGGGGGGGGGGG");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("GGGGGGGGGGGGGGG");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("BBGBGGGGGBBGGBB");
-//		grid.add("GGGGGGGGGGGGGGG");
-		
-		
+
+		// TEST 21
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("GGGGGGGGGGGGGGG");
+		grid.add("GGGGGGGGGGGGGGG");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("GGGGGGGGGGGGGGG");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("BBGBGGGGGBBGGBB");
+		grid.add("GGGGGGGGGGGGGGG");
+
+		// TEST 10
+		// answer 81.
+//		grid.add("GGGGGGGGGGGG");
+//		grid.add("GBGGBBBBBBBG");
+//		grid.add("GBGGBBBBBBBG");
+//		grid.add("GGGGGGGGGGGG");
+//		grid.add("GGGGGGGGGGGG");
+//		grid.add("GGGGGGGGGGGG");
+//		grid.add("GGGGGGGGGGGG");
+//		grid.add("GBGGBBBBBBBG");
+//		grid.add("GBGGBBBBBBBG");
+//		grid.add("GBGGBBBBBBBG");
+//		grid.add("GGGGGGGGGGGG");
+//		grid.add("GBGGBBBBBBBG");
 
 		ArrayList<StringBuilder> temp = new ArrayList<StringBuilder>();
 
 		StringBuilder sbTemp = new StringBuilder("");
 
-		HashMap<Point, ArrayList<SquareData>> sqData = new HashMap<Point, ArrayList<SquareData>>();
+		LinkedHashMap<Point, ArrayList<SquareData>> sqData = new LinkedHashMap<Point, ArrayList<SquareData>>();
 
 		for (int i = 0; i < grid.size(); i++) {
 			sbTemp = new StringBuilder("");
@@ -89,14 +102,13 @@ public class practice {
 		Point main = new Point();
 
 		int cycle = 0;
-
-		int numberth = 0;
-
+		
 		boolean available = true;
 		// row
 		for (int y = 0; y < grid.size(); y++) {
 			// col
 			for (int x = 0; x < grid.get(0).length(); x++) {
+
 				// initalizing.
 				cycle = 0;
 				if (grid.get(y).charAt(x) == 'G') {
@@ -155,6 +167,10 @@ public class practice {
 							data.pointCord.add(right);
 							data.pointCord.add(main);
 
+							if (cycle > 1) {
+								data.pointCord.addAll(sqData.get(main).get(cycle - 2).pointCord);
+							}
+
 							data.squareSize = cycle * 4 + 1;
 
 							data.main = main;
@@ -205,6 +221,11 @@ public class practice {
 
 					if (check.isEmpty()) {
 						if (sd.squareSize * t.squareSize > max) {
+
+							System.out.println(sd.squareSize + " " + t.squareSize);
+
+							System.out.println(sd.main + " " + t.main);
+
 							max = sd.squareSize * t.squareSize;
 						}
 					} else {
