@@ -19,24 +19,34 @@ class Result {
 	 */
 
 	public static void almostSorted(List<Integer> arr) {
-    // Write your code here
-    	
-    	ArrayList<Integer> list = new ArrayList<Integer>(arr);
-    	
-    	int targetInt = list.get(0);
-    	
-    	for(int i=1; i< list.size(); i++) {
-    		targetInt++;
-    		
-    		//checking if it's possible to swap.
-    		if(list.get(i) != targetInt ) {
-    			for(int j= i; j<list.size(); j++) {
-    				
-    			}
-    		}
-    	}
+		// Write your code here
 
-    }
+		ArrayList<Integer> list = new ArrayList<Integer>(arr);
+
+		int targetInt = list.get(0);
+		
+		int index = 0;
+
+		boolean availaible = false;
+
+		for (int i = 1; i < list.size(); i++) {
+
+			if(list.get(i) > targetInt) {
+				availaible = true;
+			}else {
+				availaible = false;
+			}
+			
+			if(availaible = false) {
+				index = i;
+				while(availaible = false) {
+					i++;
+				}
+			}
+			
+			
+		}
+	}
 
 }
 
