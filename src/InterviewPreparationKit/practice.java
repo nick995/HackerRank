@@ -31,8 +31,8 @@ public class practice {
 		// 2 1 5 3 4
 
 		q.add(2);
+		q.add();
 		q.add(1);
-		q.add(5);
 		q.add(3);
 		q.add(4);
 
