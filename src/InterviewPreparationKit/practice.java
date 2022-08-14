@@ -31,11 +31,10 @@ public class practice {
 		// 2 1 5 3 4
 
 		q.add(2);
-		q.add(5);
 		q.add(1);
+		q.add(5);
 		q.add(3);
 		q.add(4);
-
 
 		HashMap<Integer, Integer> counting = new HashMap<Integer, Integer>();
 
@@ -47,11 +46,33 @@ public class practice {
 
 		boolean chao = false;
 
+		int ideal = 0;
+
+		int idealIdx = 0;
+
+		int current = 0;
+
 		for (int i = 1; i <= q.size(); i++) {
 			counting.put(i, 0);
 		}
 
 		for (int i = 0; i < q.size(); i++) {
+
+			ideal = i + 1;
+
+			if (q.get(i) != ideal) {
+				current = q.get(i);
+
+				idealIdx = q.get(i) - 1;
+
+				if (idealIdx - i > 2) {
+					System.out.println("Too chaotic");
+					chao = true;
+					break;
+
+				}
+
+			}
 
 			for (int j = i - 1; j >= 0; j--) {
 
@@ -62,17 +83,10 @@ public class practice {
 					countingUp = counting.get(key);
 
 					countingUp++;
-					
-					if (countingUp >= 3) {
-						System.out.println("Too chaotic");
-						chao = true;
-						break;
-					}
-
 					counting.put(key, countingUp);
 				}
 			}
-			if(chao == true) {
+			if (chao == true) {
 				break;
 			}
 		}
