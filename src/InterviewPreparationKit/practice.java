@@ -3,11 +3,20 @@ package InterviewPreparationKit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Scanner;
 
 public class practice {
 	public static void main(String[] args) {
 		ArrayList<Integer> q = new ArrayList<Integer>();
 
+		Scanner sc = new Scanner(System.in);
+		
+		while(sc.hasNextInt()) {
+			q.add(sc.nextInt());
+		}
+		
+		
+		
 //		q.add(1);
 //		q.add(2);
 //		q.add(5);
@@ -30,19 +39,16 @@ public class practice {
 
 		// 2 1 5 3 4
 
-		q.add(2);
-		q.add();
-		q.add(1);
-		q.add(3);
-		q.add(4);
+//		q.add(2);
+//		q.add(5);
+//		q.add(1);
+//		q.add(3);
+//		q.add(4);
 
 		HashMap<Integer, Integer> counting = new HashMap<Integer, Integer>();
 
-		int key = 0;
 
 		int countingUp = 0;
-
-		int sum = 0;
 
 		boolean chao = false;
 
@@ -51,10 +57,6 @@ public class practice {
 		int idealIdx = 0;
 
 		int current = 0;
-
-		for (int i = 1; i <= q.size(); i++) {
-			counting.put(i, 0);
-		}
 
 		for (int i = 0; i < q.size(); i++) {
 
@@ -74,28 +76,15 @@ public class practice {
 
 			}
 
-			for (int j = i - 1; j >= 0; j--) {
-
+			for (int j = i - 1; j >= Math.max(idealIdx-2, 0 ); j--) {
 				if (q.get(i) < q.get(j)) {
-
-					key = q.get(j);
-
-					countingUp = counting.get(key);
-
 					countingUp++;
-					counting.put(key, countingUp);
 				}
 			}
-			if (chao == true) {
-				break;
-			}
 		}
-
-		if (chao != true) {
-			for (Integer i : counting.keySet()) {
-				sum += counting.get(i);
-			}
-			System.out.println(sum);
+		if(chao == false) {
+			System.out.println(countingUp);
 		}
 	}
+
 }
