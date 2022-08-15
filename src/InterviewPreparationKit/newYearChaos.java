@@ -20,7 +20,7 @@ class Result {
 
     public static void minimumBribes(List<Integer> q) {
     // Write your code here 
-            int countingUp = 0;
+        int countingUp = 0;
 
         boolean chao = false;
 
@@ -38,7 +38,9 @@ class Result {
                 current = q.get(i);
 
                 idealIdx = q.get(i) - 1;
-
+                //since 'if anyone cannot bride more than two people'
+                //if idealIdx (original index) -i  is bigger than 2,
+                // it means someone bride two more people.
                 if (idealIdx - i > 2) {
                     System.out.println("Too chaotic");
                     chao = true;
@@ -47,7 +49,11 @@ class Result {
                 }
 
             }
-
+            //If i will go through 0 to i-1, it causes time out.
+            //We do not need to look through all of index, since people cannot bride
+            //more than two people.
+            
+            
             for (int j = i - 1; j >= Math.max(idealIdx-2, 0); j--) {
                 if (q.get(i) < q.get(j)) {
                     countingUp++;
